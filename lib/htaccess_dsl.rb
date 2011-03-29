@@ -34,6 +34,22 @@ module HtaccessDsl
     def to_ary
       @lines
     end
+
+    def to_indented_str
+      _to_indented_str(@lines)
+    end
+
+    def _to_indented_str(directive, depth = 0)
+      result = ''
+      if directive.is_a? Array
+        directive.each do |d|
+          result += _to_indented_str(d, depth + 1)
+        end
+      else
+        result += ("  " * (depth - 1)) + directive + "\n"
+      end
+      result
+    end
   end
 
   # 渡されたブロックを DSL として解釈し, Htaccess オブジェクトを返す.
@@ -41,5 +57,9 @@ module HtaccessDsl
     htaccess = Htaccess.new
     htaccess.instance_eval(&block)
     htaccess
+  end
+
+  def htaccess(&block)
+    puts dsl(&block).to_indented_str
   end
 end

@@ -6,7 +6,7 @@ A DSL to write .htaccess files with Ruby.
 Example
 -------
 
-    dsl {
+    htaccess {
       IfModule("mod_rewrite.c") {
         RewriteEngine :on
         Limit("GET") {

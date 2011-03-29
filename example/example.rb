@@ -1,4 +1,4 @@
-puts dsl {
+htaccess {
   IfModule("mod_rewrite.c") {
     RewriteEngine :on
     Limit("GET") {
