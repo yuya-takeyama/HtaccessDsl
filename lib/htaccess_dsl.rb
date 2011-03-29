@@ -15,25 +15,20 @@ module HtaccessDsl
 
     # ディレクティブの指定
     def _puts(line)
-      @lines << _indent + line 
+      @lines << line
     end
 
     # ブロック形式の記述
     def _put_block(directive, cond = nil, &block)
       if cond.nil?
-        @lines << _indent + "<#{directive.to_s}>"
+        @lines << "<#{directive.to_s}>"
       else
-        @lines << _indent + "<#{directive.to_s} #{cond}>"
+        @lines << "<#{directive.to_s} #{cond}>"
       end
       @depth += 1
-      instance_eval(&block)
+      @lines << self.dsl(&block).to_ary
       @depth -= 1
-      @lines << _indent + "</#{directive.to_s}>"
-    end
-
-    # インデント
-    def _indent
-      "  " * @depth
+      @lines << "</#{directive.to_s}>"
     end
 
     def to_ary

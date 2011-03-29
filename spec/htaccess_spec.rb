@@ -23,4 +23,16 @@ describe Htaccess do
 
     its(:to_ary) { should == ["Foo Bar Baz", "Hoge Fuga Piyo"] }
   end
+
+  context 'DSL given { Foo { Hoge "Fuga Piyo" } }' do
+    subject do
+      dsl {
+        Foo {
+          Hoge "Fuga Piyo"
+        }
+      }
+    end
+
+    its(:to_ary) { should == ["<Foo>", ["Hoge Fuga Piyo"], "</Foo>"] }
+  end
 end
